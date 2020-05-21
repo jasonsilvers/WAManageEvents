@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: prod
+
+server:
+  port: ${PORT}
+
+app:
+  datasource:
+    jdbc-url: ${JDBC_DATABASE_URL}
+    username: paatijsmvjgmcq
+    password: ${DATABASE_PASSWORD}
+    pool-size: 30

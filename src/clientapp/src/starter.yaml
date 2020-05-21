@@ -1,0 +1,216 @@
+openapi: 3.0.2
+info:
+  title: Starter
+  version: 1.0.0
+  description: A sample API demonstrate features in the OpenAPI 3.0 specification
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: Swagger API Team
+    url: 'http://swagger.io'
+    email: team@team.com
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  -
+    url: 'http://localhost:8080/api/v1'
+    description: ''
+paths:
+  /teachers:
+    summary: Path used to manage the list of teachers.
+    description: >-
+      The REST endpoint/path used to list and create zero or more `teacher` entities.  This path
+      contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+          description: Successful response - returns an array of `teacher` entities.
+      operationId: getTeachers
+      summary: List All teachers
+      description: Gets a list of all `teacher` entities.
+    post:
+      requestBody:
+        description: A new `teacher` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+        required: true
+      responses:
+        '201':
+          description: Successful response.
+      operationId: createTeacher
+      summary: Create a teacher
+      description: Creates a new instance of a `teacher`.
+  '/teachers/{teacherId}':
+    summary: Path used to manage a single teacher.
+    description: >-
+      The REST endpoint/path used to get, update, and delete single instances of an `teacher`.  This
+      path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete
+      tasks, respectively.
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          description: Successful response - returns a single `teacher`.
+      operationId: getTeacher
+      summary: Get a teacher
+      description: Gets the details of a single instance of a `teacher`.
+    put:
+      requestBody:
+        description: Updated `teacher` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+        required: true
+      responses:
+        '202':
+          description: Successful response.
+      operationId: updateTeacher
+      summary: Update a teacher
+      description: Updates an existing `teacher`.
+    delete:
+      responses:
+        '204':
+          description: Successful response.
+      operationId: deleteTeacher
+      summary: Delete a teacher
+      description: Deletes an existing `teacher`.
+    parameters:
+      -
+        name: teacherId
+        description: A unique identifier for a `teacher`.
+        schema:
+          type: string
+        in: path
+        required: true
+  /courses:
+    summary: Path used to manage the list of courses.
+    description: >-
+      The REST endpoint/path used to list and create zero or more `course` entities.  This path contains
+      a `GET` and `POST` operation to perform the list and create tasks, respectively.
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+          description: Successful response - returns an array of `course` entities.
+      operationId: getCourses
+      summary: List All courses
+      description: Gets a list of all `course` entities.
+    post:
+      requestBody:
+        description: A new `course` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      responses:
+        '201':
+          description: Successful response.
+      operationId: createCourse
+      summary: Create a course
+      description: Creates a new instance of a `course`.
+  '/courses/{courseId}':
+    summary: Path used to manage a single course.
+    description: >-
+      The REST endpoint/path used to get, update, and delete single instances of an `course`.  This path
+      contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+      respectively.
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: Successful response - returns a single `course`.
+      operationId: getCourse
+      summary: Get a course
+      description: Gets the details of a single instance of a `course`.
+    put:
+      requestBody:
+        description: Updated `course` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      responses:
+        '202':
+          description: Successful response.
+      operationId: updateCourse
+      summary: Update a course
+      description: Updates an existing `course`.
+    delete:
+      responses:
+        '204':
+          description: Successful response.
+      operationId: deleteCourse
+      summary: Delete a course
+      description: Deletes an existing `course`.
+    parameters:
+      -
+        name: courseId
+        description: A unique identifier for a `course`.
+        schema:
+          type: string
+        in: path
+        required: true
+components:
+  schemas:
+    Course:
+      description: ''
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          description: ''
+          type: string
+        workload:
+          description: ''
+          type: integer
+        rate:
+          format: float
+          description: ''
+          type: number
+        teacher:
+          $ref: '#/components/schemas/Teacher'
+          description: ''
+    Teacher:
+      description: ''
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          description: ''
+          type: string
+        pictureUrl:
+          description: ''
+          type: string
+        email:
+          description: ''
+          type: string
