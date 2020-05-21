@@ -1,6 +1,7 @@
 import React, {FunctionComponent, useContext, useEffect} from 'react';
 import {DispatchContext, StateContext} from "../context/AppContext";
 import {setUserName} from "../actions/actions";
+import {Button, Icon} from "@chakra-ui/core";
 
 interface OwnProps {
 }
@@ -14,7 +15,10 @@ const Hello: FunctionComponent<Props> = (props) => {
 
     return (
         <div>
-          Welcome - {state.user.name}
+            Welcome - {state.user.name}
+
+            <Button>I just consumed some ⚡️Chakra!</Button>
+            <Icon name="search" />
         </div>
     );
 };
