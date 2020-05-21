@@ -1,6 +1,6 @@
-// import {createMemoryHistory, MemoryHistory} from 'history'
+import {createMemoryHistory, MemoryHistory} from 'history'
 import React, {Dispatch, useCallback, useRef, useState} from "react";
-// import {Route, Router} from "react-router-dom";
+import {Route, Router} from "react-router-dom";
 import {Action} from "../actions/actions";
 import {DefaultApi} from "../api";
 import {DispatchContext, StateContext} from "../context/AppContext";
@@ -12,17 +12,16 @@ import {Thunk} from "../types/Thunk";
 interface IRDSC {
     mockDispatch?: jest.Mock;
     testState?: IState;
-    // path?:string
-    // route?:string
-    // history?: MemoryHistory
+    path?:string
+    route?:string
+    history?: MemoryHistory
 }
 
 const defaultTestState: IState = {
     ...initialState
 }
 
-const RouterDispatchStateContext:React.FC<IRDSC> = ({mockDispatch, testState = defaultTestState, children}) => {
-
+const RouterDispatchStateContext:React.FC<IRDSC> = ({mockDispatch, testState = defaultTestState,children,path = '/',route='/', history= createMemoryHistory({initialEntries:[route]})}) => {
     const [appState, setAppState] = useState(testState);
     const api = useRef(new DefaultApi(undefined, window.baseApiUrl));
     const getApi = useCallback(() => api.current, []);
@@ -49,10 +48,9 @@ const RouterDispatchStateContext:React.FC<IRDSC> = ({mockDispatch, testState = d
 
     return <DispatchContext.Provider value={{ dispatch: mockDispatch ? mockDispatch : thunkDispatch, getApi }}>
         <StateContext.Provider value={{state: appState}}>
-            {/*<Router history={history}>*/}
-            {/*    <Route path={path}>{children}</Route>*/}
-            {/*</Router>*/}
-            {children}
+            <Router history={history}>
+                <Route path={path}>{children}</Route>
+            </Router>
         </StateContext.Provider>
     </DispatchContext.Provider>
 };

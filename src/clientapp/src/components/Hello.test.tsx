@@ -10,5 +10,5 @@ it('should display the username', () =>  {
         </RouterDispatchStateContext>
     )
 
-    expect(getByText(/Jason/i)).toBeInTheDocument()
+    expect(getByText(/Welcome - Jason/i)).toBeInTheDocument()
 });
