@@ -14,7 +14,6 @@ public class DataFillerService {
     private final CourseRepository courseRepository;
     private final TeacherRepository teacherRepository;
 
-
     public DataFillerService(CourseRepository courseRepository, TeacherRepository teacherRepository) {
         this.courseRepository = courseRepository;
         this.teacherRepository = teacherRepository;
@@ -52,5 +51,6 @@ public class DataFillerService {
         courseRepository.save(dealingWithUnknown);
         courseRepository.save(handlingYourMentalPower);
         courseRepository.save(introductionToPsychology);
+
     }
 }

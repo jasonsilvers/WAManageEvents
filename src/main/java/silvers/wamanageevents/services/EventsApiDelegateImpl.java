@@ -1,38 +1,33 @@
 package silvers.wamanageevents.services;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import silvers.wamanageevents.api.CoursesApiDelegate;
-import silvers.wamanageevents.model.Course;
-import silvers.wamanageevents.repositories.CourseRepository;
-import silvers.wamanageevents.entities.CourseEntity;
+
+import silvers.wamanageevents.api.EventsApiDelegate;
+import silvers.wamanageevents.models.Event;
+import silvers.wamanageevents.models.wildapricot.TokenResponse;
 import silvers.wamanageevents.services.wildapricot.WADataService;
-import silvers.wamanageevents.utils.ConfigProperties;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class CourseApiDelegateImpl implements CoursesApiDelegate {
+public class EventsApiDelegateImpl implements EventsApiDelegate {
 
     @Autowired
-    CourseRepository courseRepository;
-
-    @Autowired
-    private ConfigProperties configProperties;
+    WADataService waDataService;
 
     @Override
-    public ResponseEntity<List<Course>> getCourses() {
+    public ResponseEntity<List<Event>> getEvents() {
+        TokenResponse token = waDataService.GenerateNewAccessToken();
+        var events = waDataService.getAllEvents(token.getAccess_token(), 257051);
+        return ResponseEntity.ok(events);
+    }
 
-        List<CourseEntity> courseEntities = (List<CourseEntity>) courseRepository.findAll();
-        ModelMapper modelMapper = new ModelMapper();
-        List<Course> courses = courseEntities
-                                .stream()
-                                .map(courseEntity -> modelMapper.map(courseEntity, Course.class))
-                                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(courses);
+    @Override
+    public ResponseEntity<Event> getEventById(String eventsId) {
+        TokenResponse token = waDataService.GenerateNewAccessToken();
+        var event = waDataService.getEventDetails(token.getAccess_token(), eventsId,257051);
+        return ResponseEntity.ok(event);
     }
 }

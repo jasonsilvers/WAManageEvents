@@ -38,7 +38,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "openapi": "openapi-generator generate -g typescript-axios -i src/starter.yaml -DsupportsES6=true -o src/api"
+    "openapi": "openapi-generator generate -g typescript-axios -i src/restapi.yaml -DsupportsES6=true -o src/api"
   },
   "eslintConfig": {
     "extends": "react-app"

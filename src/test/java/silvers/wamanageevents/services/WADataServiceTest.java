@@ -1,23 +1,64 @@
 package silvers.wamanageevents.services;
 
+import antlr.Token;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import silvers.wamanageevents.models.wildapricot.TokenResponse;
+import silvers.wamanageevents.models.wildapricot.WaEvent;
+import silvers.wamanageevents.models.wildapricot.WaEvents;
+import silvers.wamanageevents.services.wildapricot.WADataService;
 
-import static org.hamcrest.Matchers.hasSize;
+import java.util.List;
 
-public class WADataService {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Autowired
-    MockMvc mockMvc;
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class WADataServiceTest {
+
+   @Autowired
+   WADataService waDataService;
 
     @Test
-    public void returnsListofActiveEvents() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/events")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(2)));
+    public void returnsNewAccessToken() throws Exception {
+        TokenResponse tokenResponse = waDataService.GenerateNewAccessToken();
+        System.out.println(tokenResponse.getAccess_token());
+        System.out.println(tokenResponse.getExpires_in());
+        assertThat(tokenResponse.getAccess_token()).isNotNull();
+        assertThat(tokenResponse.getExpires_in()).isNotNull();
+    }
+
+    @Test
+    public void returnsListofEvents() throws Exception {
+        TokenResponse tokenResponse = waDataService.GenerateNewAccessToken();
+        System.out.println(tokenResponse.getAccess_token());
+        var events = waDataService.getAllEvents(tokenResponse.getAccess_token(), 257051);
+        events.forEach(e -> System.out.println(e.getName()));
+        assertThat(events).hasSizeGreaterThan(2);
+    }
+
+    @Test
+    public void returnEventDetails() throws Exception {
+        TokenResponse tokenResponse = waDataService.GenerateNewAccessToken();
+        System.out.println(tokenResponse.getAccess_token());
+        var eventDetails = waDataService.getEventDetails(tokenResponse.getAccess_token(), "3234236", 257051);
+        System.out.println(eventDetails);
+        assertThat(eventDetails).isNotNull();
+    }
+
+    @Test
+    public void returnsSingleEventDetails() throws Exception {
+
     }
 }

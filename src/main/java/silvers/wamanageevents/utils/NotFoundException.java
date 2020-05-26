@@ -1,4 +1,4 @@
 package silvers.wamanageevents.utils;
 
-public class NotFoundException {
+public class NotFoundException extends RuntimeException {
 }
