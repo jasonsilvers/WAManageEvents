@@ -8,6 +8,8 @@ import silvers.wamanageevents.api.CoursesApiDelegate;
 import silvers.wamanageevents.model.Course;
 import silvers.wamanageevents.repositories.CourseRepository;
 import silvers.wamanageevents.entities.CourseEntity;
+import silvers.wamanageevents.services.wildapricot.WADataService;
+import silvers.wamanageevents.utils.ConfigProperties;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,9 @@ public class CourseApiDelegateImpl implements CoursesApiDelegate {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    private ConfigProperties configProperties;
+
     @Override
     public ResponseEntity<List<Course>> getCourses() {
 
@@ -27,7 +32,6 @@ public class CourseApiDelegateImpl implements CoursesApiDelegate {
                                 .stream()
                                 .map(courseEntity -> modelMapper.map(courseEntity, Course.class))
                                 .collect(Collectors.toList());
-
 
         return ResponseEntity.ok(courses);
     }
