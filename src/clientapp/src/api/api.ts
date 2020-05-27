@@ -22,80 +22,6 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
- * @interface Event
- */
-export interface Event {
-    /**
-     * 
-     * @type {string}
-     * @memberof Event
-     */
-    EndDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Event
-     */
-    Id: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Event
-     */
-    IsEnabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Event
-     */
-    Location?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Event
-     */
-    Name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Event
-     */
-    RegistrationLimit?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Event
-     */
-    StartDate?: string;
-    /**
-     * 
-     * @type {EventDetails}
-     * @memberof Event
-     */
-    Details?: EventDetails;
-}
-/**
- * 
- * @export
- * @interface EventDetails
- */
-export interface EventDetails {
-    /**
-     * 
-     * @type {string}
-     * @memberof EventDetails
-     */
-    DescriptionHtml?: string;
-    /**
-     * 
-     * @type {TimeZone}
-     * @memberof EventDetails
-     */
-    TimeZone?: TimeZone;
-}
-/**
- * 
- * @export
  * @interface TimeZone
  */
 export interface TimeZone {
@@ -118,6 +44,80 @@ export interface TimeZone {
      */
     UtcOffset?: number;
 }
+/**
+ * 
+ * @export
+ * @interface WaEvent
+ */
+export interface WaEvent {
+    /**
+     * 
+     * @type {string}
+     * @memberof WaEvent
+     */
+    EndDate?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WaEvent
+     */
+    Id: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WaEvent
+     */
+    IsEnabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WaEvent
+     */
+    Location?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WaEvent
+     */
+    Name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WaEvent
+     */
+    RegistrationLimit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WaEvent
+     */
+    StartDate?: string;
+    /**
+     * 
+     * @type {WaEventDetails}
+     * @memberof WaEvent
+     */
+    Details?: WaEventDetails;
+}
+/**
+ * 
+ * @export
+ * @interface WaEventDetails
+ */
+export interface WaEventDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof WaEventDetails
+     */
+    DescriptionHtml?: string;
+    /**
+     * 
+     * @type {TimeZone}
+     * @memberof WaEventDetails
+     */
+    TimeZone?: TimeZone;
+}
 
 /**
  * DefaultApi - axios parameter creator
@@ -128,16 +128,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates a new instance of a `Events`.
          * @summary Create a Events
-         * @param {Event} event A new &#x60;Events&#x60; to be created.
+         * @param {WaEvent} waEvent A new &#x60;Events&#x60; to be created.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEvents: async (event: Event, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'event' is not null or undefined
-            if (event === null || event === undefined) {
-                throw new RequiredError('event','Required parameter event was null or undefined when calling createEvents.');
+        createEvents: async (waEvent: WaEvent, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'waEvent' is not null or undefined
+            if (waEvent === null || waEvent === undefined) {
+                throw new RequiredError('waEvent','Required parameter waEvent was null or undefined when calling createEvents.');
             }
-            const localVarPath = `/events`;
+            const localVarPath = `/waevents`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -156,8 +156,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof event !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(event !== undefined ? event : {}) : (event || "");
+            const needsSerialization = (typeof waEvent !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(waEvent !== undefined ? waEvent : {}) : (waEvent || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -176,7 +176,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             if (eventsId === null || eventsId === undefined) {
                 throw new RequiredError('eventsId','Required parameter eventsId was null or undefined when calling deleteEvents.');
             }
-            const localVarPath = `/events/{eventsId}`
+            const localVarPath = `/waevents/{eventsId}`
                 .replace(`{${"eventsId"}}`, encodeURIComponent(String(eventsId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -212,7 +212,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             if (eventsId === null || eventsId === undefined) {
                 throw new RequiredError('eventsId','Required parameter eventsId was null or undefined when calling getEventById.');
             }
-            const localVarPath = `/events/{eventsId}`
+            const localVarPath = `/waevents/{eventsId}`
                 .replace(`{${"eventsId"}}`, encodeURIComponent(String(eventsId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -243,7 +243,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         getEvents: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/events`;
+            const localVarPath = `/waevents`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -270,20 +270,20 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * Updates an existing `Events`.
          * @summary Update a Events
          * @param {string} eventsId A unique identifier for a &#x60;Events&#x60;.
-         * @param {Event} event Updated &#x60;Events&#x60; information.
+         * @param {WaEvent} waEvent Updated &#x60;Events&#x60; information.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateEvents: async (eventsId: string, event: Event, options: any = {}): Promise<RequestArgs> => {
+        updateEvents: async (eventsId: string, waEvent: WaEvent, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventsId' is not null or undefined
             if (eventsId === null || eventsId === undefined) {
                 throw new RequiredError('eventsId','Required parameter eventsId was null or undefined when calling updateEvents.');
             }
-            // verify required parameter 'event' is not null or undefined
-            if (event === null || event === undefined) {
-                throw new RequiredError('event','Required parameter event was null or undefined when calling updateEvents.');
+            // verify required parameter 'waEvent' is not null or undefined
+            if (waEvent === null || waEvent === undefined) {
+                throw new RequiredError('waEvent','Required parameter waEvent was null or undefined when calling updateEvents.');
             }
-            const localVarPath = `/events/{eventsId}`
+            const localVarPath = `/waevents/{eventsId}`
                 .replace(`{${"eventsId"}}`, encodeURIComponent(String(eventsId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -303,8 +303,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof event !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(event !== undefined ? event : {}) : (event || "");
+            const needsSerialization = (typeof waEvent !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(waEvent !== undefined ? waEvent : {}) : (waEvent || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -323,12 +323,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new instance of a `Events`.
          * @summary Create a Events
-         * @param {Event} event A new &#x60;Events&#x60; to be created.
+         * @param {WaEvent} waEvent A new &#x60;Events&#x60; to be created.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEvents(event: Event, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).createEvents(event, options);
+        async createEvents(waEvent: WaEvent, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).createEvents(waEvent, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -355,7 +355,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventById(eventsId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Event>> {
+        async getEventById(eventsId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WaEvent>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getEventById(eventsId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -368,7 +368,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvents(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Event>>> {
+        async getEvents(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<WaEvent>>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getEvents(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -379,12 +379,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * Updates an existing `Events`.
          * @summary Update a Events
          * @param {string} eventsId A unique identifier for a &#x60;Events&#x60;.
-         * @param {Event} event Updated &#x60;Events&#x60; information.
+         * @param {WaEvent} waEvent Updated &#x60;Events&#x60; information.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateEvents(eventsId: string, event: Event, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).updateEvents(eventsId, event, options);
+        async updateEvents(eventsId: string, waEvent: WaEvent, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).updateEvents(eventsId, waEvent, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -402,12 +402,12 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * Creates a new instance of a `Events`.
          * @summary Create a Events
-         * @param {Event} event A new &#x60;Events&#x60; to be created.
+         * @param {WaEvent} waEvent A new &#x60;Events&#x60; to be created.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEvents(event: Event, options?: any): AxiosPromise<void> {
-            return DefaultApiFp(configuration).createEvents(event, options).then((request) => request(axios, basePath));
+        createEvents(waEvent: WaEvent, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).createEvents(waEvent, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes an existing `Events`.
@@ -426,7 +426,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventById(eventsId: string, options?: any): AxiosPromise<Event> {
+        getEventById(eventsId: string, options?: any): AxiosPromise<WaEvent> {
             return DefaultApiFp(configuration).getEventById(eventsId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -435,19 +435,19 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvents(options?: any): AxiosPromise<Array<Event>> {
+        getEvents(options?: any): AxiosPromise<Array<WaEvent>> {
             return DefaultApiFp(configuration).getEvents(options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an existing `Events`.
          * @summary Update a Events
          * @param {string} eventsId A unique identifier for a &#x60;Events&#x60;.
-         * @param {Event} event Updated &#x60;Events&#x60; information.
+         * @param {WaEvent} waEvent Updated &#x60;Events&#x60; information.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateEvents(eventsId: string, event: Event, options?: any): AxiosPromise<void> {
-            return DefaultApiFp(configuration).updateEvents(eventsId, event, options).then((request) => request(axios, basePath));
+        updateEvents(eventsId: string, waEvent: WaEvent, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).updateEvents(eventsId, waEvent, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -462,13 +462,13 @@ export class DefaultApi extends BaseAPI {
     /**
      * Creates a new instance of a `Events`.
      * @summary Create a Events
-     * @param {Event} event A new &#x60;Events&#x60; to be created.
+     * @param {WaEvent} waEvent A new &#x60;Events&#x60; to be created.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public createEvents(event: Event, options?: any) {
-        return DefaultApiFp(this.configuration).createEvents(event, options).then((request) => request(this.axios, this.basePath));
+    public createEvents(waEvent: WaEvent, options?: any) {
+        return DefaultApiFp(this.configuration).createEvents(waEvent, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -510,13 +510,13 @@ export class DefaultApi extends BaseAPI {
      * Updates an existing `Events`.
      * @summary Update a Events
      * @param {string} eventsId A unique identifier for a &#x60;Events&#x60;.
-     * @param {Event} event Updated &#x60;Events&#x60; information.
+     * @param {WaEvent} waEvent Updated &#x60;Events&#x60; information.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public updateEvents(eventsId: string, event: Event, options?: any) {
-        return DefaultApiFp(this.configuration).updateEvents(eventsId, event, options).then((request) => request(this.axios, this.basePath));
+    public updateEvents(eventsId: string, waEvent: WaEvent, options?: any) {
+        return DefaultApiFp(this.configuration).updateEvents(eventsId, waEvent, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

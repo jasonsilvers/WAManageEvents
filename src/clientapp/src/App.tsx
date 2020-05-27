@@ -3,8 +3,8 @@ import {Redirect, Route, BrowserRouter as Router, Switch, Link} from "react-rout
 import './App.css';
 import {AppProvider} from "./context/AppContext";
 import Hello from "./components/Hello";
-import TeachersList from "./components/TeachersList";
 import Navbar from "./components/Navbar";
+import EventsList from "./components/EventsList";
 
 const App: React.FC = () => {
     return (
@@ -14,7 +14,7 @@ const App: React.FC = () => {
                 <Navbar/>
                 <Switch>
                     <Route path="/" exact={true} component={Hello}/>
-                    <Route path="/teachers" exact={true} component={TeachersList}/>
+                    <Route path="/events" exact={true} component={EventsList}/>
                 </Switch>
             </Router>
         </AppProvider>

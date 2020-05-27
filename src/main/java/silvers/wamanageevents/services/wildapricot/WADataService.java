@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import silvers.wamanageevents.models.Event;
+import silvers.wamanageevents.models.WaEvent;
 import silvers.wamanageevents.models.wildapricot.TokenResponse;
-import silvers.wamanageevents.models.wildapricot.WaEvent;
 import silvers.wamanageevents.models.wildapricot.WaEvents;
 import silvers.wamanageevents.utils.RestTemplateResponseErrorHandler;
 
@@ -46,7 +45,7 @@ public class WADataService {
         return restTemplate.postForObject(wildApricotTokenUrl, request, TokenResponse.class);
     }
 
-    public List<Event> getAllEvents(String accessToken, Integer accountId) {
+    public List<WaEvent> getAllEvents(String accessToken, Integer accountId) {
         restTemplate = new RestTemplate();
         String uri = new String(wildApricotApiUrl + "/accounts/" + accountId + "/events");
         HttpHeaders headers = new HttpHeaders();
@@ -61,16 +60,16 @@ public class WADataService {
         return response.getBody().getEvents();
     }
 
-    public Event getEventDetails(String accessToken, String eventId, Integer accountId) {
+    public WaEvent getEventDetails(String accessToken, String eventId, Integer accountId) {
         restTemplate = new RestTemplate();
         String uri = new String(wildApricotApiUrl + "/accounts/" + accountId + "/events/" + eventId);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
         var request = new HttpEntity(headers);
-        ResponseEntity<Event> response = restTemplate.exchange(uri,
+        ResponseEntity<WaEvent> response = restTemplate.exchange(uri,
                 HttpMethod.GET,
                 request,
-                Event.class
+                WaEvent.class
         );
 
         return response.getBody();

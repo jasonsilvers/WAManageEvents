@@ -7,16 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import silvers.wamanageevents.models.wildapricot.TokenResponse;
-import silvers.wamanageevents.models.wildapricot.WaEvent;
-import silvers.wamanageevents.models.wildapricot.WaEvents;
 import silvers.wamanageevents.services.wildapricot.WADataService;
 
 import java.util.List;

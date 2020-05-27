@@ -14,7 +14,7 @@ const Navbar: FunctionComponent<Props> = (props) => {
                 <Link to="/">Home</Link>
             </div>
             <div>
-                <Link to="/teachers">Teachers</Link>
+                <Link to="/events">Events</Link>
 
             </div>
         </div>

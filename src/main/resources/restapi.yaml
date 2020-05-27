@@ -8,7 +8,7 @@ servers:
     url: 'http://localhost:5000/api/v1'
     description: ''
 paths:
-  /events:
+  /waevents:
     summary: Path used to manage the list of events.
     description: >-
       The REST endpoint/path used to list and create zero or more `Events` entities.  This path contains
@@ -21,7 +21,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Event'
+                  $ref: '#/components/schemas/WaEvent'
           description: Successful response - returns an array of `Events` entities.
       operationId: getEvents
       summary: List All events
@@ -32,7 +32,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              $ref: '#/components/schemas/WaEvent'
         required: true
       responses:
         '201':
@@ -40,7 +40,7 @@ paths:
       operationId: createEvents
       summary: Create a Events
       description: Creates a new instance of a `Events`.
-  '/events/{eventsId}':
+  '/waevents/{eventsId}':
     summary: Path used to manage a single Events.
     description: >-
       The REST endpoint/path used to get, update, and delete single instances of an `Events`.  This path
@@ -52,7 +52,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/WaEvent'
           description: Successful response - returns a single `Events`.
       operationId: getEventById
       summary: Get a Events
@@ -63,7 +63,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              $ref: '#/components/schemas/WaEvent'
         required: true
       responses:
         '202':
@@ -88,16 +88,6 @@ paths:
         required: true
 components:
   schemas:
-    EventDetails:
-      description: ''
-      type: object
-      properties:
-        DescriptionHtml:
-          description: ''
-          type: string
-        TimeZone:
-          $ref: '#/components/schemas/TimeZone'
-          description: ''
     TimeZone:
       description: ''
       type: object
@@ -111,7 +101,7 @@ components:
         UtcOffset:
           description: ''
           type: integer
-    Event:
+    WaEvent:
       description: ''
       required:
         - Id
@@ -139,5 +129,15 @@ components:
           description: ''
           type: string
         Details:
-          $ref: '#/components/schemas/EventDetails'
+          $ref: '#/components/schemas/WaEventDetails'
+          description: ''
+    WaEventDetails:
+      description: ''
+      type: object
+      properties:
+        DescriptionHtml:
+          description: ''
+          type: string
+        TimeZone:
+          $ref: '#/components/schemas/TimeZone'
           description: ''

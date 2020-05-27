@@ -1,4 +1,4 @@
-import {Teacher} from "../api";
+import {WaEvent} from "../api";
 
 export interface ById<E> {
     [key:string]: E
@@ -15,7 +15,10 @@ interface IUser {
 
 interface IState {
     readonly user: IUser;
-    readonly teachers: IEntity<Teacher>;
+    readonly events: IEntity<WaEvent>
+    readonly ui: {
+        isLoadingEvents: boolean
+    }
 }
 
 export default IState;

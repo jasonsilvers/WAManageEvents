@@ -1,16 +1,16 @@
 import {ById, IEntity} from "../types/State";
 
 interface IEntityBase<E> {
-    id?: string
+    Id?: number
 }
 
 export const createEntities = <T extends IEntityBase<T>>(entities: T[]): IEntity<T> => {
     const startEntityObject: ById<T> = {}
     const entitiesById: ById<T> | T = entities.reduce((newEntity: ById<T> | T, entity) => {
-        return entity.id
+        return entity.Id
             ? {
                 ...newEntity,
-                [entity.id]: {
+                [entity.Id]: {
                     ...entity
                 }
             }
@@ -18,7 +18,7 @@ export const createEntities = <T extends IEntityBase<T>>(entities: T[]): IEntity
     }, startEntityObject);
 
     const allIds = entities
-        .map(entity => entity.id)
+        .map(entity => entity.Id?.toString())
         .filter(entityId => entityId !== '');
 
     return {

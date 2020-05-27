@@ -5,9 +5,12 @@ const initialState: IState = {
     user: {
         name: 'Jason',
     },
-    teachers: {
+    events: {
         byId: {},
         allIds: []
+    },
+    ui: {
+        isLoadingEvents: false
     }
 
 }

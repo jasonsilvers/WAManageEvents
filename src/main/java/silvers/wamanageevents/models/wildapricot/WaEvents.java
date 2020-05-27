@@ -2,7 +2,7 @@ package silvers.wamanageevents.models.wildapricot;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import silvers.wamanageevents.models.Event;
+import silvers.wamanageevents.models.WaEvent;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public class WaEvents {
 
     @JsonProperty("Events")
 //    private List<WaEvent> events;
-    private List<Event> events;
+    private List<WaEvent> events;
 }
