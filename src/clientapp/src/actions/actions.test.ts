@@ -1,9 +1,7 @@
 import mockAxios from 'axios';
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+import {render, fireEvent, waitFor, screen, wait} from '@testing-library/react'
 import {getEventsAsync, setEvents, setUserName} from "./actions";
 import {DefaultApi, WaEvent} from "../api";
-
-//Is this test worth it? This is teting implementation details?
 
 it('should call the api to get teachers and dispatch for set teacher if valid', async () => {
     const e1: WaEvent = {
@@ -29,7 +27,9 @@ it('should call the api to get teachers and dispatch for set teacher if valid', 
     const getEventsThunk =  getEventsAsync();
 
     (mockAxios.request as jest.Mock).mockImplementation(() => Promise.resolve({data: events}))
-    await getEventsThunk(dispatch, getState, () => new DefaultApi())
-    //expect(dispatch).toHaveBeenCalledTimes(1)
-    //expect(dispatch).toHaveBeenCalledWith(setEvents(events))
+    getEventsThunk(dispatch, getState, () => new DefaultApi())
+    await waitFor(() => expect(dispatch).toHaveBeenCalledWith(setEvents(events)))
+    //This is generally a wrong thing because you are testing for the wrong things. React could rerender multiple times
+    //https://testingjavascript.com/lessons/react-test-drive-mocking-react-router-s-redirect-component-on-a-form-submission
+    // await waitFor(() =>  expect(dispatch).toHaveBeenCalledTimes(1))
 });

@@ -49,7 +49,7 @@ const RouterDispatchStateContext:React.FC<IRDSC> = ({mockDispatch, testState = d
     return <DispatchContext.Provider value={{ dispatch: mockDispatch ? mockDispatch : thunkDispatch, getApi }}>
         <StateContext.Provider value={{state: appState}}>
             <Router history={history}>
-                <Route path={path}>{children}</Route>
+                <Route path={path} exact={true}>{children}</Route>
             </Router>
         </StateContext.Provider>
     </DispatchContext.Provider>

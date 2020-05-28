@@ -1,10 +1,10 @@
 import React, {FunctionComponent, useContext, useEffect} from 'react';
 import {DispatchContext, StateContext} from "../context/AppContext";
 import {Spin} from 'antd';
-import { List, Typography, Divider } from 'antd';
-
+import {List} from 'antd';
+import {Link} from 'react-router-dom';
 import {getAllEvents} from "../reducers/reducer";
-import {getEventsAsync, setEventsLoading} from "../actions/actions";
+import {getEventsAsync} from "../actions/actions";
 
 interface OwnProps {
 }
@@ -31,17 +31,23 @@ const EventsList: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <List
-            header={<div>Header</div>}
-            footer={<div>Footer</div>}
-            bordered
-            dataSource={events}
-            renderItem={event => (
-                <List.Item key={event.Id}>
-                    {event.Name}
-                </List.Item>
-            )}
-        />
+        <>
+            <h1>Events List</h1>
+            <List
+                header={<div>Header</div>}
+                footer={<div>Footer</div>}
+                bordered
+                dataSource={events}
+                renderItem={event => (
+                    <List.Item key={event.Id}>
+                        <Link
+                            aria-labelledby={event.Id.toString()}
+                            to={`events/${event.Id}`}
+                        >{event.Name}</Link>
+                    </List.Item>
+                )}
+            />
+        </>
     );
 
 };

@@ -1,8 +1,9 @@
 import React from "react";
 import initialState from "../context/initialState";
 import IState from "../types/State";
-import {render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import RouterDispatchStateContext from "../__mocks__/RouterDispatchStateContext";
+import { createMemoryHistory } from 'history'
 import {WaEvent} from '../api/api'
 import EventsList from "./EventsList";
 
@@ -23,6 +24,20 @@ describe('<EventsList />', () => {
         StartDate: "2019-10-07T07:00:00-05:00",
     }
 
+    const stateWithList: IState = {
+        ...initialState,
+        events: {
+            byId: {
+                [e1.Id.toString()]: e1,
+                [e2.Id.toString()]: e2
+            },
+            allIds: [e1.Id.toString(), e2.Id.toString()]
+        },
+        ui: {
+            isLoadingEvents: false
+        }
+    }
+
     it('should render loading spinner when getting events', () => {
 
         const mockDispatch = jest.fn();
@@ -34,7 +49,7 @@ describe('<EventsList />', () => {
             }
         }
 
-        const { getByTestId } = render(
+        const {getByTestId} = render(
             <RouterDispatchStateContext testState={state} mockDispatch={mockDispatch}>
                 <EventsList/>
             </RouterDispatchStateContext>
@@ -69,22 +84,8 @@ describe('<EventsList />', () => {
 
         const mockDispatch = jest.fn();
 
-        const state: IState = {
-            ...initialState,
-            events: {
-                byId: {
-                    [e1.Id.toString()]: e1,
-                    [e2.Id.toString()]: e2
-                },
-                allIds: [e1.Id.toString(), e2.Id.toString()]
-            },
-            ui: {
-                isLoadingEvents: false
-            }
-        }
-
         const {getByText} = render(
-            <RouterDispatchStateContext testState={state} mockDispatch={mockDispatch}>
+            <RouterDispatchStateContext testState={stateWithList} mockDispatch={mockDispatch}>
                 <EventsList/>
             </RouterDispatchStateContext>
         )
@@ -92,4 +93,5 @@ describe('<EventsList />', () => {
         expect(getByText(/2020 Montgomery IT Summit/i)).toBeInTheDocument()
         expect(getByText(/2019 MITS - Wednesday Evening Social Sponsorship/i)).toBeInTheDocument()
     });
+
 })

@@ -5,6 +5,7 @@ import {AppProvider} from "./context/AppContext";
 import Hello from "./components/Hello";
 import Navbar from "./components/Navbar";
 import EventsList from "./components/EventsList";
+import EventDetails from "./components/EventDetails";
 
 const App: React.FC = () => {
     return (
@@ -13,8 +14,15 @@ const App: React.FC = () => {
             <Router basename={process.env.PUBLIC_URL}>
                 <Navbar/>
                 <Switch>
-                    <Route path="/" exact={true} component={Hello}/>
-                    <Route path="/events" exact={true} component={EventsList}/>
+                    <Route path="/" exact={true}>
+                        <Hello />
+                    </Route>
+                    <Route path="/events" exact={true}>
+                        <EventsList />
+                    </Route>
+                    <Route path="/events/:id">
+                        <EventDetails />
+                    </Route>
                 </Switch>
             </Router>
         </AppProvider>
