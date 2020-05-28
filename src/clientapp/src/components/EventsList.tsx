@@ -1,10 +1,8 @@
-import React, {FunctionComponent, useContext, useEffect} from 'react';
-import {DispatchContext, StateContext} from "../context/AppContext";
+import React, {FunctionComponent} from 'react';
 import {Spin} from 'antd';
 import {List} from 'antd';
 import {Link} from 'react-router-dom';
-import {getAllEvents} from "../reducers/reducer";
-import {getEventsAsync} from "../actions/actions";
+import {useEvents} from "../utilities/events";
 
 interface OwnProps {
 }
@@ -12,21 +10,15 @@ interface OwnProps {
 type Props = OwnProps;
 
 const EventsList: FunctionComponent<Props> = (props) => {
-    const {state} = useContext(StateContext)
-    const {dispatch} = useContext(DispatchContext)
-    const events = getAllEvents(state)
+    const {status, data, error} = useEvents()
 
-    useEffect(() => {
-        dispatch(getEventsAsync());
-    }, [dispatch]);
-
-    if (state.ui.isLoadingEvents) {
+    if (status === 'loading') {
         return (
             <Spin data-testid="spinner"/>
         )
     }
 
-    if (events.length === 0) {
+    if (data?.length === 0) {
         return <div>No Events</div>
     }
 
@@ -37,7 +29,7 @@ const EventsList: FunctionComponent<Props> = (props) => {
                 header={<div>Header</div>}
                 footer={<div>Footer</div>}
                 bordered
-                dataSource={events}
+                dataSource={data}
                 renderItem={event => (
                     <List.Item key={event.Id}>
                         <Link

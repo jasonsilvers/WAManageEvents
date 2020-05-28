@@ -1,6 +1,6 @@
 import IState from "../types/State";
 import initialState from "../context/initialState";
-import {Action, SET_EVENTS, SET_EVENTS_LOADING, SET_USERNAME,} from "../actions/actions";
+import {Action, SET_USERNAME,} from "../actions/actions";
 import {WaEvent} from "../api";
 import {createEntities} from "../utilities/utils";
 
@@ -27,30 +27,10 @@ const reducer = (state: IState = initialState, action: Action): IState => {
             }
         }
 
-        case SET_EVENTS_LOADING: {
-            return {
-                ...state,
-                ui: {
-                    isLoadingEvents: action.payload
-                }
-            }
-        }
-
-        case SET_EVENTS: {
-            const eventEntities = createEntities<WaEvent>(action.payload)
-            return {
-                ...state,
-                events: eventEntities
-            };
-        }
-        default:
-            return state;
     }
-
 }
 
 export default reducer;
 
 //Selectors - Allows extraction of data from the store state
 //export const getState = (state: IState) => state
-export const getAllEvents = (state: IState) => state.events.allIds.map(eventId => state.events.byId[eventId]);

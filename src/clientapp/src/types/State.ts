@@ -15,7 +15,6 @@ interface IUser {
 
 interface IState {
     readonly user: IUser;
-    readonly events: IEntity<WaEvent>
     readonly ui: {
         isLoadingEvents: boolean
     }

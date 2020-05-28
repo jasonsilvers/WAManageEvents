@@ -9,24 +9,25 @@ import EventDetails from "./components/EventDetails";
 
 const App: React.FC = () => {
     return (
+            <AppProvider>
+                <Router basename={process.env.PUBLIC_URL}>
+                    <Navbar/>
+                    <Switch>
+                        <Route path="/" exact={true}>
+                            <Hello/>
+                        </Route>
+                        <Route path="/events" exact={true}>
+                            <EventsList/>
+                        </Route>
+                        <Route path="/events/:id">
+                            <EventDetails/>
+                        </Route>
+                    </Switch>
+                </Router>
 
-        <AppProvider>
-            <Router basename={process.env.PUBLIC_URL}>
-                <Navbar/>
-                <Switch>
-                    <Route path="/" exact={true}>
-                        <Hello />
-                    </Route>
-                    <Route path="/events" exact={true}>
-                        <EventsList />
-                    </Route>
-                    <Route path="/events/:id">
-                        <EventDetails />
-                    </Route>
-                </Switch>
-            </Router>
-        </AppProvider>
-    );
+            </AppProvider>
+    )
+        ;
 }
 
 export default App;

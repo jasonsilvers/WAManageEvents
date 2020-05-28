@@ -1,11 +1,12 @@
 import React from "react";
 import initialState from "../context/initialState";
 import IState from "../types/State";
-import {fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import RouterDispatchStateContext from "../__mocks__/RouterDispatchStateContext";
-import { createMemoryHistory } from 'history'
+import {createMemoryHistory} from 'history'
 import {WaEvent} from '../api/api'
 import EventsList from "./EventsList";
+import mockAxios from "axios";
 
 describe('<EventsList />', () => {
     const e1: WaEvent = {
@@ -24,35 +25,13 @@ describe('<EventsList />', () => {
         StartDate: "2019-10-07T07:00:00-05:00",
     }
 
-    const stateWithList: IState = {
-        ...initialState,
-        events: {
-            byId: {
-                [e1.Id.toString()]: e1,
-                [e2.Id.toString()]: e2
-            },
-            allIds: [e1.Id.toString(), e2.Id.toString()]
-        },
-        ui: {
-            isLoadingEvents: false
-        }
-    }
+    const events = [e1, e2]
+
 
     it('should render loading spinner when getting events', () => {
 
-        const mockDispatch = jest.fn();
-
-        let state: IState = {
-            ...initialState,
-            ui: {
-                isLoadingEvents: true
-            }
-        }
-
         const {getByTestId} = render(
-            <RouterDispatchStateContext testState={state} mockDispatch={mockDispatch}>
-                <EventsList/>
-            </RouterDispatchStateContext>
+            <EventsList/>
         )
 
         expect(getByTestId('spinner')).toBeInTheDocument()
@@ -61,36 +40,29 @@ describe('<EventsList />', () => {
 
     it('should render no events', () => {
 
-        const mockDispatch = jest.fn();
-
-        const state: IState = {
-            ...initialState,
-            events: {
-                byId: {},
-                allIds: []
-            }
-        }
-
+        (mockAxios.request as jest.Mock).mockImplementation(() => Promise.resolve({data: []}))
         const {getByText} = render(
-            <RouterDispatchStateContext testState={state} mockDispatch={mockDispatch}>
-                <EventsList/>
-            </RouterDispatchStateContext>
+            <EventsList/>
         )
 
-        expect(getByText(/no events/i)).toBeInTheDocument()
+        waitFor(() => expect(getByText(/no events/i)).toBeInTheDocument())
+
     });
 
-    it('should render events', () => {
+    it('should render events', async () => {
 
-        const mockDispatch = jest.fn();
+        (mockAxios.request as jest.Mock).mockImplementation(() => Promise.resolve({data: events}))
 
         const {getByText} = render(
-            <RouterDispatchStateContext testState={stateWithList} mockDispatch={mockDispatch}>
+            <RouterDispatchStateContext>
                 <EventsList/>
             </RouterDispatchStateContext>
         )
 
-        expect(getByText(/2020 Montgomery IT Summit/i)).toBeInTheDocument()
+        await waitFor(() => {
+            expect(getByText(/2020 Montgomery IT Summit/i)).toBeInTheDocument()
+        })
+
         expect(getByText(/2019 MITS - Wednesday Evening Social Sponsorship/i)).toBeInTheDocument()
     });
 
