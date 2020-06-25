@@ -13,14 +13,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
-import silvers.wamanageevents.models.WaEvent;
-
+import silvers.wamanageevents.models.wildapricot.WaEvents;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { NotFoundException.class, WaEvent.class })
+@ContextConfiguration(classes = { NotFoundException.class, WaEvents.class })
 @RestClientTest
 public class RestTemplateResponseErrorHandlerTest {
 
@@ -44,8 +43,8 @@ public class RestTemplateResponseErrorHandlerTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.NOT_FOUND));
 
-        WaEvent response = restTemplate
-                .getForObject("/bars/4242", WaEvent.class);
+        WaEvents response = restTemplate
+                .getForObject("/bars/4242", WaEvents.class);
         this.server.verify();
     }
 }

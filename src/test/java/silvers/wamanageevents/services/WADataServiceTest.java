@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import silvers.wamanageevents.models.wildapricot.TokenResponse;
+import silvers.wamanageevents.models.wildapricot.WaEvents;
 import silvers.wamanageevents.services.wildapricot.WADataService;
 
 import java.util.List;

@@ -12,4 +12,5 @@ public class WaEvents {
     @JsonProperty("Events")
 //    private List<WaEvent> events;
     private List<WaEvent> events;
+
 }
